@@ -5,14 +5,18 @@ import "./RoomResult.css";
 
 
 const RoomResult = ({roomSearchResults}) => {
-    const navigate = useNavigate();
-    const isAdmin = ApiService.isAdmin();
+  const navigate = useNavigate();
+  const isAdmin = ApiService.isAdmin();
 
-    return (
-        <section className="room-results">
-            { roomSearchResults && roomSearchResults.length > 0 && (
-            <div className="room-list">
-                {roomSearchResults.map(room=>(
+  const roomsArray = Array.isArray(roomSearchResults)
+    ? roomSearchResults
+    : [];
+
+  return (
+    <section className="room-results">
+      {roomsArray.length > 0 && (
+        <div className="room-list">
+          {roomsArray.map((room) => (
                     <div className="room-list-item" key={room.id}>
                         <img className="room-list-item-image" src={room.imageUrl} alt={room.roomNumber} />
                         <div className="room-details">

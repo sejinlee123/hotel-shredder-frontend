@@ -31,7 +31,7 @@ const ManageRoomPage = () => {
         const fetchRoomTypes = async () => {
             try {
                 const resp = await ApiService.getRoomTypes();
-                setRoomTypes(resp)
+                setRoomTypes(Array.isArray(resp) ? resp : [])
             } catch (error) {
                 console.log(error.message)
             }

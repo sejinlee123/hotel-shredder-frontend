@@ -42,7 +42,7 @@ const EditRoomPage = () => {
         });
 
         const typesResponse = await ApiService.getRoomTypes();
-        setRoomTypes(typesResponse); // Set available room types
+        setRoomTypes(Array.isArray(typesResponse) ? typesResponse : []);
       } catch (error) {
         setError(error.response?.data?.message || error.message);
       }

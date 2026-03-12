@@ -20,7 +20,7 @@ const RoomSearch = ({handSearchResult}) => {
     const fetchRoomTypes = async () => {
       try {
         const types = await ApiService.getRoomTypes();
-        setRoomTypes(types);
+        setRoomTypes(Array.isArray(types) ? types : []);
       } catch (error) {
         console.log("Error fetching RoomTypes" + error);
       }
