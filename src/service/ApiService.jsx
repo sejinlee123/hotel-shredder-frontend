@@ -2,7 +2,8 @@ import axios from "axios";
 import CryptoJS from "crypto-js";
 
 export default class ApiService {
-  static BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  static BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:9090/api";
   static ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
 
   //enctyp token using cruyptojs
