@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import ApiService from "../../service/ApiService"; // Import API service
+import React, {useState, useEffect} from "react";
+import {useParams, useNavigate} from "react-router-dom";
+import ApiService from "../../service/ApiService";
 
 const EditBookingPage = () => {
-
-  const { bookingCode } = useParams(); // Retrieve booking reference from URL
+  const {bookingCode} = useParams();
   const navigate = useNavigate();
 
-  const [bookingDetails, setBookingDetails] = useState(null); // Store booking details
+  const [bookingDetails, setBookingDetails] = useState(null);
 
   const [formState, setFormState] = useState({
-    id:"",
+    id: "",
     bookingStatus: "",
     paymentStatus: "",
-  }); // Form for updating status
+  });
 
-  const [message, setMessage] = useState({ type: "", text: "" }); // For error/success messages
-
-  // Fetch booking details on component mount
+  const [message, setMessage] = useState({type: "", text: ""});
   useEffect(() => {
     const fetchBookingDetails = async () => {
       try {
         const response = await ApiService.getBookingByReference(bookingCode);
         setBookingDetails(response.booking);
         setFormState({
-            id:response.booking.id,
+          id: response.booking.id,
           bookingStatus: response.booking.bookingStatus || "",
           paymentStatus: response.booking.paymentStatus || "",
         });
@@ -38,14 +35,11 @@ const EditBookingPage = () => {
 
     fetchBookingDetails();
   }, [bookingCode]);
-
-  // Handle input changes for bookingStatus and paymentStatus
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormState((prev) => ({ ...prev, [name]: value }));
+    const {name, value} = e.target;
+    setFormState((prev) => ({...prev, [name]: value}));
   };
 
-  // Handle update submission
   const handleUpdate = async () => {
     if (!formState.bookingStatus && !formState.paymentStatus) {
       setMessage({ type: "error", text: "Please update at least one field." });
@@ -71,17 +65,14 @@ const EditBookingPage = () => {
     }
   };
 
-  // Render the component
   return (
     <div className="edit-booking-page">
       <h2>Update Booking</h2>
 
-      {/* Display success or error messages */}
       {message.text && (
         <p className={`${message.type}-message`}>{message.text}</p>
       )}
 
-      {/* Render booking details and update form */}
       {bookingDetails ? (
         <div className="booking-details">
           <h3>Booking Details</h3>

@@ -33,7 +33,6 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/rooms" element={<AllRoomsPage />} />
             <Route path="/find-booking" element={<FindBookingPage />} />
-
             <Route
               path="/room-details/:roomId"
               element={<CustomerRoute element={<RoomDetailsPage />} />}
@@ -46,9 +45,6 @@ function App() {
               path="/edit-profile"
               element={<CustomerRoute element={<EditProfilePage />} />}
             />
-
-            {/* PAYMENT PAGES */}
-
             <Route
               path="/payment/:bookingReference/:amount"
               element={<CustomerRoute element={<PaymentPage />} />}
@@ -61,8 +57,6 @@ function App() {
               path="/payment-failed/:bookingReference"
               element={<CustomerRoute element={<PaymentFailure />} />}
             />
-
-            {/* ADMIN ROUTES */}
             <Route
               path="/admin"
               element={<AdminRoute element={<AdminPage />} />}

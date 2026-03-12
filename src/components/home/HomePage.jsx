@@ -6,10 +6,8 @@ import "./HomePage.css";
 const HomePage = () => {
   const [roomSearchResult, setRoomSearchResult] = useState([]);
 
-  // Function to handle search result
   const handleSearchResult = (results) => {
     setRoomSearchResult(results);
-    console.log("Result is: ", results);
   };
 
   return (
@@ -40,8 +38,6 @@ const HomePage = () => {
       <h2 className="home-services">
         Services at <span className="phegon-color">LShredder Hotel</span>
       </h2>
-
-      {/* SERVICES SECTION */}
       <section className="service-section">
         <div className="service-card">
           <img src="./images/ac.png" alt="Air Conditioning" />

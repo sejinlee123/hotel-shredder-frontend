@@ -18,17 +18,8 @@ const PaymentPage = () => {
     const fetchClientSecret = async () => {
       try {
         const paymentData = {bookingReference, amount};
-        console.log("BOOKING NO IS: " + bookingReference);
-        console.log("Amount  IS: " + amount);
-
-        const uniquePaymentSecret = await ApiService.proceedForPayment(
-          paymentData,
-        );
-
-        console.log(
-          "UNIQUE CLIENT SECRET FROM fetchClientSecret is: " +
-            uniquePaymentSecret,
-        );
+        const uniquePaymentSecret =
+          await ApiService.proceedForPayment(paymentData);
         setClientSecret(uniquePaymentSecret);
       } catch (error) {
         console.log(error);
@@ -42,10 +33,8 @@ const PaymentPage = () => {
     return <div className="error-message">{error}</div>;
   }
 
-  // Initialize Stripe with public key
   const stripePromise = loadStripe(stripePublicKey);
 
-  // Function to update payment status for our booking in our backend database
   const handlePaymentStatus = async (
     paymentStatus,
     transactionId = "",
@@ -61,7 +50,6 @@ const PaymentPage = () => {
       };
 
       await ApiService.updateBookingPaymeent(paymentData);
-      console.log("Payment sataus weas updated");
     } catch (error) {
       console.log(error.message);
     }

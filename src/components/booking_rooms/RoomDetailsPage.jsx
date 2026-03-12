@@ -7,8 +7,6 @@ import "./RoomDetailsPage.css";
 const RoomDetailsPage = () => {
   const navigate = useNavigate();
   const {roomId} = useParams();
-
-  //state management
   const [room, setRoom] = useState(null);
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
@@ -18,9 +16,6 @@ const RoomDetailsPage = () => {
   const [showBookingPreview, setShowBookingPreview] = useState(false);
   const [showMessage, setShowMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  //fetch room details
-
   useEffect(() => {
     const fetchRoomDetails = async () => {
       try {
@@ -35,22 +30,18 @@ const RoomDetailsPage = () => {
     fetchRoomDetails();
   }, []);
 
-  //Calculate total price
   const calculateTotalPrice = () => {
     if (!checkInDate || !checkOutDate) return 0;
 
-    const oneDay = 24 * 60 * 60 * 1000; ///this is number in milisec
+    const oneDay = 24 * 60 * 60 * 1000;
 
-    const totalDays = Math.round(
-      Math.abs((new Date(checkOutDate) - new Date(checkInDate)) / oneDay),
-    ); //give the difference in millsec
+    const totalDays = Math.round((checkOutDate - checkInDate) / oneDay);
 
     setTotalDaysToStay(totalDays);
 
     return room?.pricePerNight * totalDays || 0;
   };
 
-  //handle booking confirmation
   const handleConfirmation = () => {
     if (!checkInDate || !checkOutDate) {
       setErrorMessage("Please select both check-in and check-out dates");
@@ -63,7 +54,6 @@ const RoomDetailsPage = () => {
   };
 
   const acceptBooking = async () => {
-    console.log("Inside acceptBooking()");
     try {
       const formattedCheckInDate = checkInDate.toLocaleDateString("en-CA");
       const formatterdCheckOutDate = checkOutDate.toLocaleDateString("en-CA");
@@ -90,7 +80,6 @@ const RoomDetailsPage = () => {
     }
   };
 
-  // If room is null, show loading
   if (!room) {
     return <div>Loading...</div>;
   }
@@ -100,11 +89,9 @@ const RoomDetailsPage = () => {
 
   return (
     <div className="room-details-booking">
-      {/* Success and Error Messages */}
       {showMessage && <p className="booking-success-message">{showMessage}</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      {/* Room Details */}
       <h2>Room Details</h2>
       <img src={imageUrl} alt={type} className="room-details-image" />
       <div className="room-details-info">
@@ -115,7 +102,6 @@ const RoomDetailsPage = () => {
         <p>{description}</p>
       </div>
 
-      {/* Booking Controls */}
       <div className="booking-info">
         <button
           className="book-now-button"
@@ -149,7 +135,6 @@ const RoomDetailsPage = () => {
           </div>
         )}
 
-        {/* Booking Preview and submit */}
         {showBookingPreview && (
           <div className="booking-preview">
             <h3>Booking Preview</h3>

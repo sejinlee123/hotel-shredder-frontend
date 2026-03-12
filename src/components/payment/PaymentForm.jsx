@@ -15,26 +15,22 @@ const PaymentForm = ({clientSecret, amount, onPaymentSuccess, onPaymentError}) =
 
     if (!stripe || !elements || processing) return;
 
-    setProcessing(true); //disable submit button
+    setProcessing(true);
 
     const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
       },
     });
-    console.log("PAYMENT IS: " + paymentIntent);
 
     if (error) {
       setError(error.message);
       setProcessing(false);
       onPaymentError(error.message);
-
-      console.log("Error insdie  PaymentForm is: " + error);
     } else if (paymentIntent.status === "succeeded") {
-      console.log("PaymentForm is successful: " + paymentIntent);
       setSucceeded(true);
       setProcessing(false);
-      onPaymentSuccess(paymentIntent.id); //notifyb the parent component of a sucessful transaction
+      onPaymentSuccess(paymentIntent.id);
     }
   };
 

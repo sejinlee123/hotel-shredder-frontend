@@ -6,38 +6,31 @@ export default class ApiService {
     import.meta.env.VITE_API_BASE_URL || "http://localhost:9090/api";
   static ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
 
-  //enctyp token using cruyptojs
-
   static encrypt(token) {
     return CryptoJS.AES.encrypt(token, this.ENCRYPTION_KEY.toString());
   }
 
-  //deceype token using cruyptojs
   static decrypt(token) {
     const bytes = CryptoJS.AES.decrypt(token, this.ENCRYPTION_KEY);
     return bytes.toString(CryptoJS.enc.Utf8);
   }
 
-  //save token
   static saveToken(token) {
     const encrytpedToken = this.encrypt(token);
     localStorage.setItem("token", encrytpedToken);
   }
 
-  //retreive token
   static getToken() {
     const encrytpedToken = localStorage.getItem("token");
     if (!encrytpedToken) return null;
     return this.decrypt(encrytpedToken);
   }
 
-  //save role
   static saveRole(role) {
     const encrytpedRole = this.encrypt(role);
     localStorage.setItem("role", encrytpedRole);
   }
 
-  //get role
   static getRole() {
     const encrytpedRole = localStorage.getItem("role");
     if (!encrytpedRole) return null;
@@ -57,9 +50,6 @@ export default class ApiService {
     };
   }
 
-  /** AUTH AND USERS API METHODS */
-
-  // AUTH
   static async registerUser(registrationData) {
     const resp = await axios.post(
       `${this.BASE_URL}/auth/register`,
@@ -73,7 +63,6 @@ export default class ApiService {
     return resp.data;
   }
 
-  // USERS
   static async myProfile() {
     const resp = await axios.get(`${this.BASE_URL}/users/account`, {
       headers: this.getHeader(),
@@ -95,8 +84,6 @@ export default class ApiService {
     return resp.data;
   }
 
-  // ROOMS
-
   static async addRoom(formData) {
     const resp = await axios.post(`${this.BASE_URL}/rooms/add`, formData, {
       headers: {
@@ -107,19 +94,16 @@ export default class ApiService {
     return resp.data;
   }
 
-  //to get room types
   static async getRoomTypes() {
     const resp = await axios.get(`${this.BASE_URL}/rooms/types`);
     return resp.data;
   }
 
-  //to get all rooms
   static async getAllRooms() {
     const resp = await axios.get(`${this.BASE_URL}/rooms/all`);
     return resp.data;
   }
 
-  //To get room details
   static async getRoomById(roomId) {
     const resp = await axios.get(`${this.BASE_URL}/rooms/${roomId}`);
     return resp.data;
@@ -152,7 +136,6 @@ export default class ApiService {
     return resp.data;
   }
 
-  //BOOKINGS
   static async getBookingByReference(bookingCode) {
     const resp = await axios.get(`${this.BASE_URL}/bookings/${bookingCode}`);
     return resp.data;
@@ -179,16 +162,13 @@ export default class ApiService {
     return resp.data;
   }
 
-  //PAYMMENT
-  //funtion to create payment intent
   static async proceedForPayment(body) {
     const resp = await axios.post(`${this.BASE_URL}/payments/pay`, body, {
       headers: this.getHeader(),
     });
-    return resp.data; //return the strip transaction id for this transaction
+    return resp.data;
   }
 
-  //TO UPDATE PAYMENT WHEN IT HAS BEEN COMPLETED
   static async updateBookingPaymeent(body) {
     const resp = await axios.put(`${this.BASE_URL}/payments/update`, body, {
       headers: this.getHeader(),
@@ -196,7 +176,6 @@ export default class ApiService {
     return resp.data;
   }
 
-  //AUTHENTICATION CHECKER
   static logout() {
     this.clearAuth();
   }

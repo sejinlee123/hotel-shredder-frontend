@@ -3,14 +3,13 @@ import ApiService from "../../service/ApiService";
 import {DayPicker} from "react-day-picker";
 import "./Search.css";
 
-const RoomSearch = ({ handSearchResult }) => {
+const RoomSearch = ({handSearchResult}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [roomType, setRoomType] = useState("");
   const [roomTypes, setRoomTypes] = useState([]);
   const [error, setError] = useState("");
 
-  // State for controlling calendar visibility
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
 
@@ -45,7 +44,6 @@ const RoomSearch = ({ handSearchResult }) => {
     };
   }, []);
 
-  // Show error
   const showError = (message, timeout = 5000) => {
     setError(message);
     setTimeout(() => {
@@ -53,7 +51,6 @@ const RoomSearch = ({ handSearchResult }) => {
     }, timeout);
   };
 
-  // This will fetch the rooms available from our API
   const handleInternalSearch = async () => {
     if (!startDate || !endDate || !roomType) {
       showError("Please select fields");
@@ -67,7 +64,6 @@ const RoomSearch = ({ handSearchResult }) => {
       const formattedEndDate = endDate
         ? endDate.toLocaleDateString("en-CA")
         : null;
-
 
       const resp = await ApiService.getAvailableRooms(
         formattedStartDate,
@@ -87,14 +83,11 @@ const RoomSearch = ({ handSearchResult }) => {
       showError(error?.response?.data?.message || error.message);
     }
   };
-
-
-return (
+  return (
     <section>
       <div className="search-container">
 
-        {/* check-in date and calendar field */}
-        <div className="search-field" style={{ position: "relative" }}>
+        <div className="search-field">
           <label>Check-in Date</label>
           <input
             type="text"
@@ -118,8 +111,7 @@ return (
           )}
         </div>
 
-        {/* check-out date and calendar field */}
-        <div className="search-field" style={{ position: "relative" }}>
+        <div className="search-field">
           <label>Check-Out Date</label>
           <input
             type="text"
@@ -143,7 +135,6 @@ return (
           )}
         </div>
   
-        {/* Room type selection */}
         <div className="search-field">
           <label>Room Type</label>
           <select value={roomType} onChange={(e)=> setRoomType(e.target.value)}>
@@ -156,12 +147,10 @@ return (
           </select>
         </div>
   
-        {/* Search button */}
         <button className="home-search-button" onClick={handleInternalSearch}>
           Search Rooms
         </button>
       </div>
-  
       {error && <p className="error-message">{error}</p>}
     </section>
   );

@@ -20,7 +20,6 @@ const AllRoomsPage = () => {
   };
 
   useEffect(() => {
-    // Get all rooms
     const fetchRooms = async () => {
       try {
         const resp = await ApiService.getAllRooms();
@@ -31,7 +30,6 @@ const AllRoomsPage = () => {
       }
     };
 
-    // Get room types
     const fetchRoomTypes = async () => {
       try {
         const types = await ApiService.getRoomTypes();
@@ -44,14 +42,12 @@ const AllRoomsPage = () => {
     fetchRoomTypes();
   }, []);
 
-  //handle changes to room type filter
   const handleRoomTypeChange = (e) => {
     const selectedType = e.target.value;
     setSelectedRoomType(selectedType);
     filterRooms(selectedType);
   };
 
-  //filter rooms by type
   const filterRooms = (type) => {
     if (type === "") {
       setFilteredRooms(rooms);
@@ -62,7 +58,6 @@ const AllRoomsPage = () => {
     setCurrentPage(1);
   };
 
-  //pagination calculation
   const indexOfLastRoom = currentPage * roomsPerPage;
   const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
   const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
