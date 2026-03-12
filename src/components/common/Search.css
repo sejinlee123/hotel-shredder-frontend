@@ -89,12 +89,9 @@ button:hover {
   background-color: rgb(34, 80, 128);
 }
 
-/* Datepicker container (overlays without shifting layout) */
 .datepicker-container {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 9999;
+  position: relative;
+  z-index: 10;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;

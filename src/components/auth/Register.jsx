@@ -36,9 +36,13 @@ const RegisterPage = () => {
         setTimeout(() => navigate("/login"), 3000);
       }
     } catch (error) {
+      const msg = error.response?.data?.message || error.message;
+      const isDuplicate =
+        error.response?.status === 409 ||
+        /already exists|duplicate|already registered/i.test(String(msg));
       setMessage({
         type: "error",
-        text: error.response?.data?.message || error.message,
+        text: isDuplicate ? "User already exists" : msg,
       });
       setTimeout(() => setMessage({}), 5000);
     }
