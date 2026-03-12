@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import RoomResult from "../common/RoomResult";
 import RoomSearch from "../common/RoomSearch";
 import "./HomePage.css";
@@ -26,13 +27,16 @@ const HomePage = () => {
         </header>
       </section>
 
-      <div className="home-search-row">
-        <div className="home-search-row-inner">
-          <RoomSearch handSearchResult={handleSearchResult} />
-        </div>
-        <a className="view-rooms-home-button" href="/rooms">
-          All Rooms
-        </a>
+      <div className="home-search-column">
+        <RoomSearch
+          handSearchResult={handleSearchResult}
+          twoRowLayout
+          extraActions={
+            <Link to="/rooms" className="home-search-cta">
+              All Rooms
+            </Link>
+          }
+        />
       </div>
       <RoomResult roomSearchResults={roomSearchResult} />
 

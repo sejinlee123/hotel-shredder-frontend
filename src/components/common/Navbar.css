@@ -8,6 +8,7 @@
   font-family: Arial, sans-serif;
   font-size: 20px;
   position: relative;
+  overflow: visible;
 }
 
 .navbar-brand a {
@@ -19,6 +20,8 @@
 
 .navbar-menu-wrapper {
   position: relative;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 .navbar-hamburger {
@@ -57,10 +60,13 @@
   flex-direction: row;
   align-items: center;
   gap: 0;
+  min-width: 0;
+  flex: 0 0 auto;
 }
 
 .navbar-dropdown li {
   margin: 0;
+  flex: 0 0 auto;
 }
 
 .navbar-dropdown li a,
@@ -77,6 +83,8 @@
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
+  min-width: max-content;
+  box-sizing: border-box;
 }
 
 .navbar-dropdown li a:hover,
@@ -118,7 +126,8 @@
     top: 100%;
     right: 0;
     margin-top: 8px;
-    min-width: 200px;
+    min-width: 240px;
+    width: max-content;
     padding: 8px 0;
     background-color: white;
     border: 1px solid #ddd;
@@ -133,11 +142,19 @@
     display: flex;
   }
 
+  .navbar-dropdown li {
+    width: 100%;
+    min-width: 0;
+  }
+
   .navbar-dropdown li a,
   .navbar-dropdown-logout {
     width: 100%;
-    padding: 10px 20px;
+    min-width: 0;
+    padding: 12px 20px;
     text-align: left;
+    white-space: normal;
+    word-break: keep-all;
   }
 
   .navbar-dropdown li a:hover,

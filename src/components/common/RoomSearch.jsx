@@ -3,7 +3,7 @@ import ApiService from "../../service/ApiService";
 import {DayPicker} from "react-day-picker";
 import "./Search.css";
 
-const RoomSearch = ({handSearchResult}) => {
+const RoomSearch = ({ handSearchResult, twoRowLayout = false, extraActions = null }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [roomType, setRoomType] = useState("");
@@ -12,9 +12,11 @@ const RoomSearch = ({handSearchResult}) => {
 
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
+  const [isRoomTypeOpen, setRoomTypeOpen] = useState(false);
 
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
+  const roomTypeRef = useRef(null);
 
   useEffect(() => {
     const fetchRoomTypes = async () => {
@@ -34,6 +36,9 @@ const RoomSearch = ({handSearchResult}) => {
     }
     if (endDateRef.current && !endDateRef.current.contains(event.target)) {
       setEndDatePickerVisible(false);
+    }
+    if (roomTypeRef.current && !roomTypeRef.current.contains(event.target)) {
+      setRoomTypeOpen(false);
     }
   };
 
@@ -83,22 +88,12 @@ const RoomSearch = ({handSearchResult}) => {
       showError(error?.response?.data?.message || error.message);
     }
   };
-  return (
-    <section>
-      <div className="search-container">
-
-        <div className="search-field">
+  const fields = (
+    <>
+        <div className="search-field" ref={startDateRef}>
           <label>Check-in Date</label>
-          <input
-            type="text"
-            value={startDate ? startDate.toLocaleDateString() : ""}
-            placeholder="Select Check-In Date"
-            onFocus={() => setStartDatePickerVisible(true)}
-            readOnly
-          />
-  
           {isStartDatePickerVisible && (
-            <div className="datepicker-container" ref={startDateRef}>
+            <div className="datepicker-container">
               <DayPicker
                 selected={startDate}
                 onDayClick={(date) => {
@@ -109,20 +104,27 @@ const RoomSearch = ({handSearchResult}) => {
               />
             </div>
           )}
+          <div
+            className="search-field-trigger"
+            onClick={() => setStartDatePickerVisible((o) => !o)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setStartDatePickerVisible((o) => !o);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isStartDatePickerVisible}
+          >
+            {startDate ? startDate.toLocaleDateString() : "Select Check-In Date"}
+          </div>
         </div>
 
-        <div className="search-field">
+        <div className="search-field" ref={endDateRef}>
           <label>Check-Out Date</label>
-          <input
-            type="text"
-            value={endDate ? endDate.toLocaleDateString() : ""}
-            placeholder="Select Check-Out Date"
-            onFocus={() => setEndDatePickerVisible(true)}
-            readOnly
-          />
-  
           {isEndDatePickerVisible && (
-            <div className="datepicker-container" ref={endDateRef}>
+            <div className="datepicker-container">
               <DayPicker
                 selected={endDate}
                 onDayClick={(date) => {
@@ -133,24 +135,96 @@ const RoomSearch = ({handSearchResult}) => {
               />
             </div>
           )}
+          <div
+            className="search-field-trigger"
+            onClick={() => setEndDatePickerVisible((o) => !o)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setEndDatePickerVisible((o) => !o);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isEndDatePickerVisible}
+          >
+            {endDate ? endDate.toLocaleDateString() : "Select Check-Out Date"}
+          </div>
         </div>
-  
-        <div className="search-field">
+
+        <div className="search-field" ref={roomTypeRef}>
           <label>Room Type</label>
-          <select value={roomType} onChange={(e)=> setRoomType(e.target.value)}>
-              <option disabled value="">Select Room Type</option>
-              {roomTypes.map((roomType) =>(
-                  <option value={roomType} key={roomType}>
-                      {roomType}
-                  </option>
+          <div
+            className="search-field-trigger"
+            onClick={() => setRoomTypeOpen((o) => !o)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setRoomTypeOpen((o) => !o);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isRoomTypeOpen}
+            aria-haspopup="listbox"
+          >
+            {roomType || "Select Room Type"}
+          </div>
+          {isRoomTypeOpen && (
+            <div className="search-field-dropdown" role="listbox">
+              <button
+                type="button"
+                className={`search-field-option ${!roomType ? "selected" : ""}`}
+                onClick={() => {
+                  setRoomType("");
+                  setRoomTypeOpen(false);
+                }}
+              >
+                Select Room Type
+              </button>
+              {roomTypes.map((type) => (
+                <button
+                  type="button"
+                  key={type}
+                  className={`search-field-option ${roomType === type ? "selected" : ""}`}
+                  onClick={() => {
+                    setRoomType(type);
+                    setRoomTypeOpen(false);
+                  }}
+                >
+                  {type}
+                </button>
               ))}
-          </select>
+            </div>
+          )}
         </div>
-  
-        <button className="home-search-button" onClick={handleInternalSearch}>
-          Search Rooms
-        </button>
-      </div>
+    </>
+  );
+
+  const searchButton = (
+    <button className="home-search-button" onClick={handleInternalSearch}>
+      Search Rooms
+    </button>
+  );
+
+  return (
+    <section className={twoRowLayout ? "search-two-rows" : ""}>
+      {twoRowLayout ? (
+        <>
+          <div className="search-fields-row">
+            <div className="search-container">{fields}</div>
+          </div>
+          <div className="search-actions-row">
+            {searchButton}
+            {extraActions}
+          </div>
+        </>
+      ) : (
+        <div className="search-container">
+          {fields}
+          {searchButton}
+        </div>
+      )}
       {error && <p className="error-message">{error}</p>}
     </section>
   );
