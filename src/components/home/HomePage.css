@@ -23,15 +23,12 @@
 
 /* Header banner */
 .header-banner {
-  background-size: cover;
-  background-position: center;
   position: relative;
   height: 80vh;
-}
-
-.header-banner {
-  position: relative;
-  height: 500px;
+  max-height: 500px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
 }
 
 .header-banner h1 {
@@ -46,16 +43,53 @@
 
 .header-image {
   width: 100%;
-  height: 80vh;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
 }
 
-/* View all rooms home section */
-.view-rooms-home {
-  margin: 15px 0px 0px 4.6rem;
-  font-size: 20px;
-  font-weight: 500;
-  text-decoration: underline;
-  color: #ff7f50;
+/* Search row: search + All Rooms button on same row */
+.home-search-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.home-search-row-inner {
+  flex: 1;
+  min-width: 280px;
+}
+
+.view-rooms-home-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #ff7f50;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(255, 127, 80, 0.35);
+  transition: background-color 0.25s, box-shadow 0.25s, transform 0.15s;
+}
+
+.view-rooms-home-button:hover {
+  background-color: #e66b3a;
+  box-shadow: 0 4px 12px rgba(255, 127, 80, 0.45);
+  transform: translateY(-1px);
+}
+
+.view-rooms-home-button:active {
+  transform: translateY(0);
 }
 
 /* Home services section */
@@ -108,6 +142,20 @@
 @media (max-width: 768px) {
   .header-banner h1 {
     font-size: 20px;
+  }
+
+  .home-search-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 10px;
+  }
+
+  .home-search-row-inner {
+    min-width: 0;
+  }
+
+  .view-rooms-home-button {
+    width: 100%;
   }
 
   .service-section {

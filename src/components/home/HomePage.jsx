@@ -26,14 +26,15 @@ const HomePage = () => {
         </header>
       </section>
 
-      <RoomSearch handSearchResult={handleSearchResult} />
-      <RoomResult roomSearchResults={roomSearchResult} />
-
-      <h4>
-        <a className="view-rooms-home" href="/rooms">
+      <div className="home-search-row">
+        <div className="home-search-row-inner">
+          <RoomSearch handSearchResult={handleSearchResult} />
+        </div>
+        <a className="view-rooms-home-button" href="/rooms">
           All Rooms
         </a>
-      </h4>
+      </div>
+      <RoomResult roomSearchResults={roomSearchResult} />
 
       <h2 className="home-services">
         Services at <span className="phegon-color">LShredder Hotel</span>

@@ -42,7 +42,10 @@ function Navbar() {
         <NavLink to="/home">LShredder Hotel</NavLink>
       </div>
 
-      <div className="navbar-menu-wrapper" ref={menuRef}>
+      <div
+        className={`navbar-menu-wrapper ${menuOpen ? "open" : ""}`}
+        ref={menuRef}
+      >
         <button
           type="button"
           className="navbar-hamburger"
@@ -55,8 +58,7 @@ function Navbar() {
           <span className="navbar-hamburger-bar" />
         </button>
 
-        {menuOpen && (
-          <ul className="navbar-dropdown">
+        <ul className="navbar-dropdown">
             <li>
               <NavLink to="/home" className={navLinkClass} onClick={closeMenu}>
                 Home
@@ -108,7 +110,6 @@ function Navbar() {
               </li>
             )}
           </ul>
-        )}
       </div>
     </nav>
   );
