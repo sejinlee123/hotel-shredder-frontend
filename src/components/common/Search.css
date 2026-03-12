@@ -9,7 +9,8 @@
 }
 
 .search-field {
-  position: relative; /* anchor for absolute datepicker */
+  position: relative;
+  overflow: visible;
   flex: 0 0 calc(25% - 10px);
   margin: 10px;
   padding: 15px;

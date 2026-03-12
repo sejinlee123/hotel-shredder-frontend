@@ -23,8 +23,9 @@ const AllRoomsPage = () => {
     const fetchRooms = async () => {
       try {
         const resp = await ApiService.getAllRooms();
-        setRooms(resp.rooms);
-        setFilteredRooms(resp.rooms);
+        const roomsData = Array.isArray(resp.rooms) ? resp.rooms : [];
+        setRooms(roomsData);
+        setFilteredRooms(roomsData);
       } catch (error) {
         console.log(error);
       }
@@ -49,18 +50,20 @@ const AllRoomsPage = () => {
   };
 
   const filterRooms = (type) => {
+    const baseRooms = Array.isArray(rooms) ? rooms : [];
     if (type === "") {
-      setFilteredRooms(rooms);
+      setFilteredRooms(baseRooms);
     } else {
-      const filtered = rooms.filter((room) => room.type === type);
+      const filtered = baseRooms.filter((room) => room.type === type);
       setFilteredRooms(filtered);
     }
     setCurrentPage(1);
   };
 
+  const safeFilteredRooms = Array.isArray(filteredRooms) ? filteredRooms : [];
   const indexOfLastRoom = currentPage * roomsPerPage;
   const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
-  const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
+  const currentRooms = safeFilteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -85,7 +88,7 @@ const AllRoomsPage = () => {
 
       <Pagination
         roomPerPage={roomsPerPage}
-        totalRooms={filteredRooms.length}
+        totalRooms={safeFilteredRooms.length}
         currentPage={currentPage}
         paginate={paginate}
       />
