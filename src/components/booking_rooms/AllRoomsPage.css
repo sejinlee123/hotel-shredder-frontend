@@ -1,0 +1,41 @@
+.all-rooms {
+  margin: 50px 0px 90px 0px;
+}
+
+.all-rooms h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #007f86;
+}
+
+.all-room-filter-div {
+  margin-left: 5rem;
+}
+
+.all-room-filter-div label {
+  color: #007f86;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.filter-select-div {
+  width: 100%;
+  margin: 0px 0px 0px 4rem;
+}
+
+.add-room-button {
+  float: right;
+  margin-right: 70px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .all-room-filter-div {
+    margin: 0;
+  }
+
+  .filter-select-div {
+    width: 100%;
+  }
+}
+
