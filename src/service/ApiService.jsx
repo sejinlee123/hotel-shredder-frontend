@@ -105,7 +105,7 @@ export default class ApiService {
   }
 
   static async getRoomById(roomId) {
-    const resp = await axios.get(`${this.BASE_URL}/rooms/${roomId}`);
+    const resp = await axios.get(`${this.BASE_URL}/rooms/id/${roomId}`);
     return resp.data;
   }
 
