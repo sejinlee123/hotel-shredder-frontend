@@ -3,6 +3,8 @@ import ApiService from "../../service/ApiService";
 import {useNavigate} from "react-router-dom";
 import "./RoomResult.css";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || "";
+
 
 const RoomResult = ({roomSearchResults}) => {
   const navigate = useNavigate();
@@ -18,7 +20,11 @@ const RoomResult = ({roomSearchResults}) => {
         <div className="room-list">
           {roomsArray.map((room) => (
                     <div className="room-list-item" key={room.id}>
-                        <img className="room-list-item-image" src={room.imageUrl} alt={room.roomNumber} />
+                        <img
+                          className="room-list-item-image"
+                          src={`${BACKEND_BASE_URL}${room.imageUrl}`}
+                          alt={room.roomNumber}
+                        />
                         <div className="room-details">
                             <h3>{room.type}</h3>
                             <p>Price: ${room.pricePerNight}/Night</p>

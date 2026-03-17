@@ -4,6 +4,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import "./RoomDetailsPage.css";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || "";
+
 const RoomDetailsPage = () => {
   const navigate = useNavigate();
   const {roomId} = useParams();
@@ -93,7 +95,11 @@ const RoomDetailsPage = () => {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <h2>Room Details</h2>
-      <img src={imageUrl} alt={type} className="room-details-image" />
+      <img
+        src={`${BACKEND_BASE_URL}${imageUrl}`}
+        alt={type}
+        className="room-details-image"
+      />
       <div className="room-details-info">
         <h3>{type}</h3>
         <p>Room Number: {roomNumber}</p>

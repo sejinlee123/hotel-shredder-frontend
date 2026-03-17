@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import ApiService from "../../service/ApiService";
 import "./Profile.css";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || "";
+
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [bookings, setBookings] = useState(null);
@@ -88,7 +90,7 @@ const ProfilePage = () => {
                   <strong>Room Type:</strong> {booking.room.type}
                 </p>
                 <img
-                  src={booking.room.imageUrl}
+                  src={`${BACKEND_BASE_URL}${booking.room.imageUrl}`}
                   alt="Room"
                   className="room-photo"
                 />

@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import ApiService from "../../service/ApiService";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || "";
+
 const EditBookingPage = () => {
   const {bookingCode} = useParams();
   const navigate = useNavigate();
@@ -103,7 +105,11 @@ const EditBookingPage = () => {
             <p> Price per Night: ${bookingDetails.room.pricePerNight}</p>
             <p> Capacity: {bookingDetails.room.capacity}</p>
             <p> Description: {bookingDetails.room.description}</p>
-            <img src={bookingDetails.room.imageUrl} alt="" height="200" />
+            <img
+              src={`${BACKEND_BASE_URL}${bookingDetails.room.imageUrl}`}
+              alt=""
+              height="200"
+            />
           </div>
           <hr />
 

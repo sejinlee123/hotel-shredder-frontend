@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import ApiService from "../../service/ApiService";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || "";
+
 const FindBookingPage = () => {
   const [confirmationCode, setConfirmationCode] = useState("");
   const [bookingDetails, setBookingDetails] = useState(null);
@@ -65,7 +67,10 @@ const FindBookingPage = () => {
             <p> Room Number: {bookingDetails.room.roomNumber}</p>
             <p> Room Type: {bookingDetails.room.type}</p>
             <p> Room Capacity: {bookingDetails.room.capacity}</p>
-            <img src={bookingDetails.room.imageUrl} alt="" sizes="" srcSet="" />
+            <img
+              src={`${BACKEND_BASE_URL}${bookingDetails.room.imageUrl}`}
+              alt=""
+            />
           </div>
         </div>
       )}
