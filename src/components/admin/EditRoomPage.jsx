@@ -3,6 +3,8 @@ import {useParams, useNavigate} from "react-router-dom";
 import ApiService from "../../service/ApiService";
 import "./RoomAdmin.css";
 
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL || "";
+
 
 
 const EditRoomPage = () => {
@@ -133,7 +135,7 @@ const EditRoomPage = () => {
           ) : (
             roomDetails.imageUrl && (
               <img
-                src={roomDetails.imageUrl}
+                src={`${BACKEND_BASE_URL}${roomDetails.imageUrl}`}
                 alt="Room"
                 className="room-photo"
               />
