@@ -55,4 +55,4 @@ React + Vite frontend for the HotelShredder booking system. Lets users browse ro
 
 ### License
 
-See `LICENSE` for licensing details.
+See [LICENSE](LICENSE).
