@@ -2,6 +2,8 @@
 
 React + Vite frontend for the HotelShredder booking system. Lets users browse rooms, search availability, make bookings and payments, and manage rooms/bookings as an admin. Talks to the Spring Boot backend over a JSON API.
 
+**Live site:** [https://hotelshredder.cv](https://hotelshredder.cv/home)
+
 ---
 
 ### What it does
